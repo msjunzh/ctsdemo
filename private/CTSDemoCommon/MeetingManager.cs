@@ -203,10 +203,6 @@ namespace CTSDemoCommon
                             {
                                 connection.SetMessageProperty("speech.config", "transcriptionMode", $"\"Async\"");
                             }
-                            else if (meetingInfo.OperationMode == OperationMode.NearRealtime)
-                            {
-                                connection.SetMessageProperty("speech.config", "enabledLabFeatures", $"\"NearRT\"");
-                            }
 
                             // Subscribe to events
                             conversationTranscriber.Transcribing += (s, e) =>

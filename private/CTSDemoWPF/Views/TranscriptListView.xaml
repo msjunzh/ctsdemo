@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="CTSDemoWPF.Views.TranscriptListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CTSDemoWPF" xmlns:views="clr-namespace:CTSDemoWPF.Views" xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             mc:Ignorable="d" 
+             Background="Black" Margin="0" >
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type local:UtteranceViewModel}">
+            <views:UtteranceView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:CaptionViewModel}">
+            <views:CaptionView DataContext="{Binding}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="93"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" Name="TrancriptScrollViewer" ScrollChanged="ScrollViewer_ScrollChanged" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer.Resources>
+                <system:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">5</system:Double>
+            </ScrollViewer.Resources>
+            <ItemsControl ItemsSource="{Binding Utterances}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+        <Grid Background="#666666" Grid.Row="2"/>
+        <ScrollViewer Grid.Row="4" Name="CaptionScrollViewer" ScrollChanged="CaptionScrollViewer_ScrollChanged" VerticalScrollBarVisibility="Hidden">
+            <ItemsControl ItemsSource="{Binding Captions}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+    
+</UserControl>

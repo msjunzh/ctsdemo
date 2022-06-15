@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="CTSDemoWPF.Views.UtteranceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CTSDemoWPF" xmlns:converters="clr-namespace:LiveTranscriptUi.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <converters:AliasToImagePathConverter x:Key="AliasToImagePathConverter" />
+        <converters:IsCompletedToUtteranceBackgroundConverter x:Key="IsCompletedToUtteranceBackgroundConverter" />
+        <converters:IsCompletedToFontSizeConverter x:Key="IsCompletedToFontSizeConverter" />
+        <converters:IsCompletedToFontStyleConverter x:Key="IsCompletedToFontStyleConverter" />
+        <converters:IsCompletedToPhotoSizeConverter x:Key="IsCompletedToPhotoSizeConverter" />
+        <converters:IsCompletedToTransparencyConverter x:Key="IsCompletedToTransparencyConverter" />
+    </UserControl.Resources>
+
+    <Grid Background="Transparent" Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Ellipse Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,15,0" VerticalAlignment="Top" MouseDown="SpeakerPhoto_MouseDown">
+            <Ellipse.Width>
+                <Binding Path="IsActiveUtterance"  Converter="{StaticResource IsCompletedToPhotoSizeConverter}">
+                </Binding>
+            </Ellipse.Width>
+            <Ellipse.Height>
+                <Binding Path="IsActiveUtterance" Converter="{StaticResource IsCompletedToPhotoSizeConverter}">
+                </Binding>
+            </Ellipse.Height>
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="{Binding ImageKey, Converter={StaticResource AliasToImagePathConverter}}" AlignmentY="Top" AlignmentX="Left" />
+            </Ellipse.Fill>
+        </Ellipse>
+
+        <DockPanel Grid.Column="1" Grid.Row="0">
+            <TextBlock Text="{Binding DisplayName}" Background="Transparent" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Left" >
+                <TextBlock.Foreground>
+                    <Binding Path="IsActiveUtterance" Converter="{StaticResource IsCompletedToTransparencyConverter}" />
+                </TextBlock.Foreground>
+            </TextBlock>
+            <TextBlock Text="{Binding TimeDisplay}" Background="Transparent" FontFamily="Segoe UI" FontSize="18" HorizontalAlignment="Right" DockPanel.Dock="Right">
+                <TextBlock.Foreground>
+                    <Binding Path="IsActiveUtterance" Converter="{StaticResource IsCompletedToTransparencyConverter}" />
+                </TextBlock.Foreground>
+            </TextBlock>
+        </DockPanel>
+
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Text}" Background="Transparent" FontFamily="Segoe UI" FontWeight="{Binding IsActiveUtterance, Converter={StaticResource IsCompletedToFontStyleConverter}}" FontSize="{Binding IsActiveUtterance, Converter={StaticResource IsCompletedToFontSizeConverter}}" TextWrapping="Wrap">
+            <TextBlock.Foreground>
+                <Binding Path="IsActiveUtterance" Converter="{StaticResource IsCompletedToTransparencyConverter}" />
+            </TextBlock.Foreground>
+        </TextBlock>
+    </Grid>
+</UserControl>

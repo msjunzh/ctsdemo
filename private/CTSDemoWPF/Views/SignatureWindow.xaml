@@ -1,0 +1,44 @@
+﻿<Window x:Class="CTSDemoWPF.Views.SignatureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CTSDemoWPF.Views"
+        mc:Ignorable="d"
+        Title="Profiles" Height="300" Width="600" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <Style x:Key="doubleClickItemStyle" TargetType="{x:Type ListViewItem}">
+            <EventSetter Event="MouseDoubleClick" Handler="HandleDoubleClick" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+
+        <ListView Grid.Column="0" ItemsSource="{Binding Signatures}" ItemContainerStyle="{StaticResource doubleClickItemStyle}">
+
+            <ListView.View>
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Signature Information">
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Margin="0" VerticalAlignment="Center" IsChecked="{Binding IsChecked}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=DisplayName}" Header="Display Name" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=SignatureCaptureTime}" Header="Enrolled Time" Width="150"/>
+                </GridView>
+
+            </ListView.View>
+        </ListView>
+        <StackPanel Grid.Column="1">
+            <Button Content="Add" Background="White" FontFamily="Segoe UI" Height="30" Click="AddButton_Click" Margin="10"/>
+            <Button Content="Delete" Background="White" FontFamily="Segoe UI" Height="30" Click="DeleteButton_Click" Margin="10"/>
+            <Button Content="Close" Background="White" FontFamily="Segoe UI" Height="30" Click="CloseButton_Click" Margin="10"/>
+        </StackPanel>
+    </Grid>
+</Window>
